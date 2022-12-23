@@ -2,9 +2,7 @@
 
 
 ## Uma análise sob características que levam um perfil a ser bem avaliado no Ifood
-
-
-## Minha ideia de perfil será boa?
+Minha ideia de perfil será boa?
 
 
 ### Grupo: Bruno Menegaz, Gustavo Dutra, Lorenzo Scaramussa

@@ -13,13 +13,16 @@ import urllib
 
 if not os.path.exists('images'):
     os.makedirs('images')
-else:
-    #delete all files in images folder
-    for file in os.listdir('images'):
-        os.remove(os.path.join('images', file))
 
 feData = pd.read_csv('data/ifood-restaurants-february-2021.csv')
-avatares = feData['avatar']
+noData = pd.read_csv('data/ifood-restaurants-november-2020.csv')
+data = feData[feData['url'].isin(noData['url'])]
+
+#removendo restaurantes com rating == 0 e == 5
+data = data[(data['rating'] != 0)&(data['rating'] != 5)]
+data = data.reset_index(drop=True)
+
+avatares = data['avatar']
 
 images = [] 
 

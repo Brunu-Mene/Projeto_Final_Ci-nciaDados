@@ -2,3 +2,5 @@ data/*.csv
 images/*.png
 images/*.jpg
 *.pkl
+train/
+test/

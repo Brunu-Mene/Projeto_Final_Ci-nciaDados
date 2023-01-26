@@ -24,28 +24,87 @@ data = data.reset_index(drop=True)
 
 avatares = data['avatar']
 
-images = [] 
 
-indexes_to_drop = []
+data['isElite'] = data['rating'].apply(lambda x: 1 if x >= 4.5 else 0)
 
-sleep_time = 0
 
-for i in tqdm(range(50000, len(avatares))):
-    url = avatares.values[i]
-    
-    response = requests.get(url)
-    if response.status_code:
-        try:
-            fp = open(f'images/{str(i)}.jpg', 'wb')
-            fp.write(response.content)
-            fp.close()
+# images = [] 
 
-            image = Image.open(f'images/{str(i)}.jpg')
-            image.thumbnail((64,64))
-            image.save(f'images/{str(i)}.jpg')
-        except:
-            indexes_to_drop.append(i)
+# indexes_to_drop = []
+
+# sleep_time = 0
+
+# for i in tqdm(range(130000, len(avatares))):
+#     url = avatares.values[i]
+#     try: 
+#         response = requests.get(url)
+#     except:
+#         indexes_to_drop.append(i)
+#         continue
+#     if response.status_code:
+#         try:
+#             fp = open(f'images/{str(i)}.jpg', 'wb')
+#             fp.write(response.content)
+#             fp.close()
+
+#             image = Image.open(f'images/{str(i)}.jpg')
+#             image.thumbnail((64,64))
+#             image.save(f'images/{str(i)}.jpg')
+#         except:
+#             indexes_to_drop.append(i)
+#     else:
+#         indexes_to_drop.append(i)
+
+# print(indexes_to_drop)
+
+#from the folder images, separate the images in folders of train and test, 75% train and 25% test
+import os
+import shutil
+import random
+
+#creating folders
+if not os.path.exists('train'):
+    os.makedirs('train')
+if not os.path.exists(('train/0')): 
+    os.makedirs('train/0')
+if not os.path.exists(('train/1')):
+    os.makedirs('train/1')
+if not os.path.exists('test'):
+    os.makedirs('test')
+if not os.path.exists(('test/0')):
+    os.makedirs('test/0')
+if not os.path.exists(('test/1')):
+    os.makedirs('test/1')
+
+
+for i in tqdm(data.index): 
+    if not os.path.isfile('images/'+'{}.jpg'.format(i)):
+        continue
+    if data['isElite'].values[i] == 1:
+        if random.random() < 0.75:
+            shutil.copy('images/'+ '{}.jpg'.format(i), 'train/1/'+'{}.jpg'.format(i))
+        else:
+            shutil.copy('images/'+ '{}.jpg'.format(i), 'test/1/'+'{}.jpg'.format(i))
     else:
-        indexes_to_drop.append(i)
+        if random.random() < 0.75: 
+            shutil.copy('images/'+ '{}.jpg'.format(i), 'train/0/'+'{}.jpg'.format(i))
+        else:
+            shutil.copy('images/'+ '{}.jpg'.format(i), 'test/0/'+'{}.jpg'.format(i))
 
-print(indexes_to_drop)
+
+
+
+
+
+        
+
+# #sepating images in train and test folders
+# for i in tqdm(data.index):
+#     #check if image exists 
+#     if not os.path.isfile('images/'+'{}.jpg'.format(i)):
+#         continue
+#     if random.random() < 0.75:
+#         shutil.copy('images/'+ '{}.jpg'.format(i), 'train/'+'{}.jpg'.format(i))
+#     else:
+#         shutil.copy('images/'+ '{}.jpg'.format(i), 'test/'+'{}.jpg'.format(i))
+

@@ -2,3 +2,8 @@ data/*.csv
 images/*.png
 images/*.jpg
 *.pkl
+train/
+test/
+train_reduced/
+test_reduced/
+dados.rar

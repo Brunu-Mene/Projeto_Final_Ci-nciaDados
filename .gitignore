@@ -7,3 +7,4 @@ test/
 train_reduced/
 test_reduced/
 dados.rar
+saved_models/

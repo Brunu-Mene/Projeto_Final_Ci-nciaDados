@@ -22,7 +22,6 @@ data = feData[feData['url'].isin(noData['url'])]
 data = data[(data['rating'] != 0)&(data['rating'] != 5)]
 data = data.reset_index(drop=True)
 
-avatares = data['avatar']
 
 
 data['isElite'] = data['rating'].apply(lambda x: 1 if x >= 4.5 else 0)
